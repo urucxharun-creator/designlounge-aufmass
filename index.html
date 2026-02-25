@@ -501,6 +501,34 @@
       width: 100%;
       align-self: flex-start;
     }
+    .quick-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 8px;
+      position: relative;
+      z-index: 5;
+    }
+    .quick-actions #newProjectMain {
+      border: 1px solid #0ea5a4;
+      background: #0ea5a4;
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      box-shadow: 0 10px 20px rgba(14,165,164,0.26);
+      min-height: 46px;
+      cursor: pointer;
+    }
+    body.theme-ocean .quick-actions #newProjectMain {
+      border-color: rgba(56,189,248,0.9);
+      background: linear-gradient(135deg, rgba(45,212,191,0.95), rgba(14,165,233,0.95));
+      color: #f8fafc;
+      box-shadow: 0 8px 20px rgba(45,212,191,0.22), 0 0 16px rgba(56,189,248,0.2);
+    }
     .stats-bar {
       margin: 0;
       padding: 4px 8px;
@@ -521,6 +549,54 @@
     }
     .stats-bar span { opacity: 0.95; }
     .stats-bar strong { font-weight: 800; color: #fff; }
+    .app-meta {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+    .app-version,
+    .sync-pill {
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      border: 1px solid rgba(148,163,184,0.45);
+      background: rgba(255,255,255,0.9);
+      color: #0f172a;
+      white-space: nowrap;
+    }
+    .app-version {
+      opacity: 0.9;
+    }
+    .sync-pill[data-state="connected"] {
+      border-color: rgba(16,185,129,0.5);
+      background: rgba(16,185,129,0.14);
+      color: #065f46;
+    }
+    .sync-pill[data-state="syncing"] {
+      border-color: rgba(14,165,233,0.5);
+      background: rgba(14,165,233,0.14);
+      color: #075985;
+    }
+    .sync-pill[data-state="offline"] {
+      border-color: rgba(245,158,11,0.5);
+      background: rgba(245,158,11,0.16);
+      color: #92400e;
+    }
+    .sync-pill[data-state="error"] {
+      border-color: rgba(239,68,68,0.5);
+      background: rgba(239,68,68,0.14);
+      color: #991b1b;
+    }
+    .sync-pill[data-state="local"] {
+      border-color: rgba(100,116,139,0.5);
+      background: rgba(100,116,139,0.14);
+      color: #334155;
+    }
     .date-field input#datumDisplay {
       cursor: pointer;
       background: #ffffff;
@@ -548,6 +624,37 @@
     .bottom-notes .field {
       background: #ffffff;
       border: 1.8px solid var(--ui-accent-2);
+    }
+    body.theme-ocean .app-version,
+    body.theme-ocean .sync-pill {
+      border-color: rgba(129, 220, 232, 0.45);
+      background: rgba(8, 24, 34, 0.88);
+      color: #d9f3ff;
+    }
+    body.theme-ocean .sync-pill[data-state="connected"] {
+      border-color: rgba(74, 222, 128, 0.5);
+      background: rgba(16,185,129,0.2);
+      color: #c8ffe2;
+    }
+    body.theme-ocean .sync-pill[data-state="syncing"] {
+      border-color: rgba(56,189,248,0.6);
+      background: rgba(14,165,233,0.22);
+      color: #ccf3ff;
+    }
+    body.theme-ocean .sync-pill[data-state="offline"] {
+      border-color: rgba(251,191,36,0.6);
+      background: rgba(245,158,11,0.24);
+      color: #ffe4b3;
+    }
+    body.theme-ocean .sync-pill[data-state="error"] {
+      border-color: rgba(248,113,113,0.6);
+      background: rgba(239,68,68,0.24);
+      color: #ffd1d1;
+    }
+    body.theme-ocean .sync-pill[data-state="local"] {
+      border-color: rgba(148,163,184,0.6);
+      background: rgba(100,116,139,0.24);
+      color: #dbeafe;
     }
     .field {
       position: relative;
@@ -1164,6 +1271,8 @@
       width: 36px;
       height: 36px;
       font-size: 20px;
+      background: linear-gradient(180deg, #94a3b8, #64748b);
+      box-shadow: 0 10px 18px rgba(100,116,139,0.3);
     }
     .plus.compact .plus-label { display: none; }
     .plus:hover { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 16px 30px rgba(0,183,166,0.28); }
@@ -1741,19 +1850,15 @@
         grid-template-columns: 1fr auto;
         grid-template-areas:
           "stats burger"
-          "theme burger";
+          "meta burger";
         align-items: center;
         gap: 6px 10px;
         margin-top: 2px;
         justify-self: end;
       }
       .header-actions .stats-bar { grid-area: stats; justify-self: end; }
-      .header-actions .theme-switch { grid-area: theme; justify-self: end; }
+      .header-actions .app-meta { grid-area: meta; justify-self: end; }
       .header-actions .burger { grid-area: burger; justify-self: end; align-self: center; }
-      .theme-switch button {
-        padding: 6px 10px;
-        font-size: 11px;
-      }
       .stats-bar {
         font-size: 10px;
         padding: 3px 8px;
@@ -1791,7 +1896,7 @@
         grid-template-columns: 1fr;
         grid-template-areas:
           "stats"
-          "theme"
+          "meta"
           "burger";
         align-items: center;
         justify-items: end;
@@ -1799,10 +1904,8 @@
         margin-top: 4px;
       }
       .header-actions .stats-bar { grid-area: stats; justify-self: end; }
-      .header-actions .theme-switch { grid-area: theme; justify-self: end; }
+      .header-actions .app-meta { grid-area: meta; justify-self: end; }
       .header-actions .burger { grid-area: burger; justify-self: end; }
-      .theme-switch { gap: 6px; padding: 4px; }
-      .theme-switch button { min-width: 72px; padding: 6px 10px; font-size: 11px; }
       .stats-bar { font-size: 9px; padding: 3px 6px; }
       .burger { width: 52px; height: 44px; }
       .toggle { font-size: 12px; padding: 6px 8px; }
@@ -1814,16 +1917,31 @@
         gap: 10px;
         padding-bottom: 6px;
       }
+      .quick-actions {
+        padding: 2px 10px 6px;
+      }
+      .quick-actions #newProjectMain {
+        min-height: 42px;
+        padding: 8px 14px;
+        font-size: 13px;
+      }
       .topbar .field { min-width: 0; width: 100%; }
       .topbar .field-wide { grid-column: 1 / -1; }
       .stats-bar { font-size: 10px; padding: 3px 8px; }
     }
     @media (max-width: 520px) {
-      header { padding-right: 156px; }
-      .brand-block { max-width: calc(100% - 170px); }
-      .header-actions { width: 150px; top: 8px; right: 8px; gap: 5px; }
+      header { padding-right: 10px; }
+      .brand-block { max-width: none; }
+      .header-actions { width: auto; top: auto; right: auto; gap: 5px; }
       .topbar {
         grid-template-columns: 1fr;
+      }
+      .quick-actions {
+        justify-content: flex-start;
+      }
+      .quick-actions #newProjectMain {
+        width: 100%;
+        max-width: none;
       }
       .brand-logo { width: 58px; height: 58px; }
       .controls {
@@ -1844,58 +1962,72 @@
         font-size: 11px;
       }
       .plus {
-        min-width: 48px;
-        min-height: 48px;
+        min-width: 42px;
+        min-height: 42px;
       }
       .plus .plus-icon {
-        width: 34px;
-        height: 34px;
-        font-size: 20px;
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
       }
       .plus.gap-mini {
-        min-width: 34px;
-        min-height: 34px;
+        min-width: 28px;
+        min-height: 28px;
       }
       .plus.gap-mini .plus-icon {
-        width: 24px;
-        height: 24px;
-        font-size: 14px;
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
       }
       .plus.top-mini {
         min-height: 24px;
       }
       .plus.top-mini .plus-icon {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         font-size: 12px;
       }
     }
     @media (max-width: 720px) {
       header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: flex-start;
-        padding-right: 176px;
+        column-gap: 10px;
+        padding-right: 12px;
       }
       .brand-block {
-        flex: 1 1 auto;
-        max-width: calc(100% - 190px);
+        flex: initial;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
       }
       .header-actions {
-        position: absolute;
-        top: 8px;
-        right: 10px;
-        width: 170px;
+        position: static;
+        top: auto;
+        right: auto;
+        width: auto;
+        min-width: 160px;
+        margin-left: auto;
         display: grid;
         grid-template-areas:
-          "theme"
           "stats"
+          "meta"
           "burger";
         gap: 6px;
         align-items: center;
         justify-items: end;
       }
-      .header-actions .theme-switch { grid-area: theme; flex-wrap: nowrap; }
       .header-actions .stats-bar { grid-area: stats; }
+      .header-actions .app-meta { grid-area: meta; }
       .header-actions .burger { grid-area: burger; }
+      .quick-actions {
+        padding: 6px 12px 8px;
+        justify-content: flex-start;
+      }
+      .quick-actions #newProjectMain {
+        min-width: 170px;
+      }
       .stats-bar {
         font-size: 10px;
         padding: 4px 8px;
@@ -1906,12 +2038,12 @@
       }
       .stats-bar span { white-space: nowrap; }
       .plus {
-        min-width: 56px;
-        min-height: 56px;
+        min-width: 50px;
+        min-height: 50px;
         padding: 0;
       }
       .plus .plus-label { display: none; }
-      .plus .plus-icon { width: 42px; height: 42px; font-size: 24px; }
+      .plus .plus-icon { width: 36px; height: 36px; font-size: 22px; }
       .area-tabs {
         top: 8px;
         left: 8px;
@@ -1942,6 +2074,11 @@
         flex: 0 0 auto;
         scroll-snap-align: start;
       }
+      .app-version,
+      .sync-pill {
+        font-size: 10px;
+        padding: 3px 7px;
+      }
       .legend {
         left: 12px;
         right: 12px;
@@ -1954,10 +2091,37 @@
       .drawer { width: 90vw; right: -100vw; }
       .box.door::after { width: 8px; height: 20px; right: 4px; }
     }
+    @media (max-width: 560px) {
+      header {
+        grid-template-columns: 1fr;
+        row-gap: 8px;
+      }
+      .header-actions {
+        width: 100%;
+        min-width: 0;
+        margin-left: 0;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "stats burger"
+          "meta meta";
+        justify-items: start;
+        align-items: center;
+      }
+      .header-actions .burger { justify-self: end; }
+      .header-actions .stats-bar { justify-self: start; }
+      .header-actions .app-meta { justify-self: start; }
+      .quick-actions {
+        padding: 6px 10px 8px;
+      }
+      .quick-actions #newProjectMain {
+        min-width: 0;
+        width: 100%;
+      }
+    }
 
     @media print {
       body { background: #fff; }
-      .burger, .controls, .plus-layer, .drawer, .drawer-backdrop { display: none !important; }
+      .burger, .controls, .quick-actions, .plus-layer, .drawer, .drawer-backdrop { display: none !important; }
       .board { box-shadow: none; border-radius: 0; }
       .legend { position: static; margin-top: 8px; box-shadow: none; }
       header { padding-top: 0; }
@@ -1988,14 +2152,17 @@
         </div>
       </div>
       <div class="header-actions">
-        <div class="theme-switch" id="themeSwitch">
-          <button type="button" data-theme="ocean" class="active">Ocean</button>
-          <button type="button" data-theme="classic">Classic</button>
-        </div>
         <div class="stats-bar" id="stats"></div>
+        <div class="app-meta">
+          <span class="sync-pill" id="syncStatus" data-state="syncing">Sync...</span>
+        </div>
         <button class="burger" id="openDrawer" type="button" aria-label="Archiv"><span></span></button>
       </div>
     </header>
+
+    <div class="quick-actions">
+      <button type="button" id="newProjectMain">Neues Projekt</button>
+    </div>
 
     <div class="topbar">
       <div class="field">
@@ -2042,7 +2209,7 @@
       <div class="controls">
         <button type="button" class="primary" id="share">WhatsApp senden</button>
         <button type="button" class="secondary" id="pdf">PDF exportieren</button>
-        <button type="button" class="light" id="newProjectMain">Neues Projekt</button>
+        <button type="button" class="secondary" id="backup">Backup JSON</button>
       </div>
     </main>
     <div class="photo-strip">
@@ -2157,7 +2324,7 @@
     <div class="signature-title">Unterschrift (Anzahlung)</div>
     <div class="signature-field">
       <label for="signatureAmount">Anzahlung (€)</label>
-      <input id="signatureAmount" type="number" min="0" step="0.01" placeholder="z.B. 150" />
+      <input id="signatureAmount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="z.B. 150" />
     </div>
     <canvas class="signature-canvas" id="signatureCanvas"></canvas>
     <div class="signature-actions">
@@ -2194,11 +2361,11 @@
       <div class="modal-grid" style="margin-top:8px;">
         <div>
           <label for="modalW">B (cm)</label>
-          <input id="modalW" type="number" min="0" step="0.1" />
+          <input id="modalW" type="number" min="0.1" step="0.1" inputmode="decimal" required />
         </div>
         <div>
           <label for="modalH">H (cm)</label>
-          <input id="modalH" type="number" min="0" step="0.1" />
+          <input id="modalH" type="number" min="0.1" step="0.1" inputmode="decimal" required />
         </div>
       </div>
       <label for="modalNote" style="margin-top:8px;">Bemerkung</label>
@@ -2238,9 +2405,9 @@
     const DRAFT_KEY = "dlr-draft-v1";
     const LAST_KEY = "dlr-last-id-v1";
     const REAL_KEY = "dlr-realistic-v1";
-    const THEME_KEY = "dlr-theme-v1";
     const FILTER_KEY = "dlr-archive-filter-v1";
     const LOGO_KEY = "dlr-logo-v1";
+    const APP_VERSION = "2026.02.26.2";
     const SUPABASE_URL = "https://jecubjejuiwlaubthwaq.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_jjBqkM-RsErDEa6zsAbjpg_e6jIrxdb";
     const LOGO_PLACEHOLDER = "data:image/svg+xml;utf8," + encodeURIComponent(`
@@ -2286,6 +2453,88 @@
       photos: [],
       photoSlots: 3
     };
+    const plusLayoutState = {
+      points: [],
+      w: 0,
+      h: 0
+    };
+
+    function resetPlusLayout(width, height) {
+      plusLayoutState.points = [];
+      plusLayoutState.w = Math.max(0, width || 0);
+      plusLayoutState.h = Math.max(0, height || 0);
+    }
+
+    function plusRadiusForVariant(variant) {
+      const v = String(variant || "");
+      const mobileSmall = window.matchMedia("(max-width: 520px)").matches;
+      const mobile = window.matchMedia("(max-width: 720px)").matches;
+      let iconSize = mobileSmall ? 34 : (mobile ? 42 : 58);
+      if (v.includes("gap-mini")) iconSize = mobileSmall ? 24 : (mobile ? 30 : 36);
+      if (v.includes("top-mini")) iconSize = mobileSmall ? 20 : (mobile ? 24 : 28);
+      return Math.max(12, iconSize * 0.5 + 8);
+    }
+
+    function resolvePlusPosition(x, y, radius, options) {
+      const opts = options || {};
+      const variant = String(opts.variant || "");
+      const essential = !!opts.essential;
+      const width = plusLayoutState.w || board.clientWidth || 0;
+      const height = plusLayoutState.h || board.clientHeight || 0;
+      const isMobile = window.matchMedia("(max-width: 900px)").matches || width < 900;
+      const pad = 4;
+      const minX = radius + pad;
+      const maxX = Math.max(minX, width - radius - pad);
+      const minY = radius + pad;
+      const maxY = Math.max(minY, height - radius - pad);
+      const baseX = clamp(x, minX, maxX);
+      const baseY = clamp(y, minY, maxY);
+
+      const collides = (cx, cy) => plusLayoutState.points.some(p => {
+        const minDist = p.r + radius + 6;
+        const dx = cx - p.x;
+        const dy = cy - p.y;
+        return dx * dx + dy * dy < minDist * minDist;
+      });
+
+      if (!collides(baseX, baseY)) return { x: baseX, y: baseY };
+
+      const orbitStep = Math.max(12, radius * 0.8);
+      const maxRings = isMobile ? 6 : 14;
+      const maxOrbit = isMobile
+        ? (variant.includes("top-mini") ? 32 : (variant.includes("gap-mini") ? 36 : 52))
+        : Infinity;
+      for (let ring = 1; ring <= maxRings; ring++) {
+        const orbit = orbitStep * ring * (isMobile ? 0.9 : 1.4);
+        if (orbit > maxOrbit) break;
+        const samples = 12 + ring * 4;
+        for (let i = 0; i < samples; i++) {
+          const angle = (Math.PI * 2 * i) / samples;
+          const cx = clamp(baseX + Math.cos(angle) * orbit, minX, maxX);
+          const cy = clamp(baseY + Math.sin(angle) * orbit, minY, maxY);
+          if (!collides(cx, cy)) return { x: cx, y: cy };
+        }
+      }
+
+      if (isMobile && variant.includes("gap-mini") && !essential) return null;
+
+      let best = null;
+      const grid = Math.max(18, Math.round(radius));
+      for (let gy = minY; gy <= maxY; gy += grid) {
+        for (let gx = minX; gx <= maxX; gx += grid) {
+          if (collides(gx, gy)) continue;
+          let minDistance = Infinity;
+          plusLayoutState.points.forEach(p => {
+            const d = Math.hypot(gx - p.x, gy - p.y) - (p.r + radius);
+            if (d < minDistance) minDistance = d;
+          });
+          if (!best || minDistance > best.score) best = { x: gx, y: gy, score: minDistance };
+        }
+      }
+      if (best && (!isMobile || essential)) return { x: best.x, y: best.y };
+      if (isMobile && !essential) return null;
+      return { x: baseX, y: baseY };
+    }
 
     function getArea(kind) {
       return state.areas[kind || state.activeArea];
@@ -2349,6 +2598,7 @@
       renderArchiveList();
     }
     const realToggle = document.getElementById("realToggle");
+    const syncStatusEl = document.getElementById("syncStatus");
     const logoInput = document.getElementById("logoInput");
     const brandLogoWrap = document.getElementById("brandLogoWrap");
     const brandLogo = document.getElementById("brandLogo");
@@ -2371,6 +2621,16 @@
       return Math.min(Math.max(val, min), max);
     }
 
+    function sameId(a, b) {
+      return String(a ?? "") === String(b ?? "");
+    }
+
+    function setSyncStatus(state, text) {
+      if (!syncStatusEl) return;
+      syncStatusEl.dataset.state = state || "syncing";
+      syncStatusEl.textContent = text || "Sync...";
+    }
+
     function openDrawer() {
       drawer.classList.add("open");
       drawerBackdrop.classList.add("show");
@@ -2379,6 +2639,11 @@
     function closeDrawer() {
       drawer.classList.remove("open");
       drawerBackdrop.classList.remove("show");
+      if (archiveFilter !== "all") {
+        archiveFilter = "all";
+        localStorage.setItem(FILTER_KEY, "all");
+        updateArchiveFilterButtons();
+      }
     }
 
     function getArchive() {
@@ -2452,7 +2717,7 @@
     function upsertCache(project) {
       if (!project || !project.id) return;
       const list = getArchive().slice();
-      const idx = list.findIndex(p => p.id === project.id);
+      const idx = list.findIndex(p => sameId(p.id, project.id));
       if (idx >= 0) list[idx] = project;
       else list.unshift(project);
       list.sort((a, b) => new Date(b.updated || 0) - new Date(a.updated || 0));
@@ -2461,7 +2726,7 @@
 
     function removeFromCache(id) {
       if (!id) return;
-      const list = getArchive().filter(p => p.id !== id);
+      const list = getArchive().filter(p => !sameId(p.id, id));
       saveArchive(list);
     }
 
@@ -2473,24 +2738,26 @@
         .order("updated", { ascending: false });
       if (error) {
         console.warn("Supabase fetch error:", error);
-        return;
+        return false;
       }
       const list = (data || []).map(rowToProject).filter(Boolean);
       saveArchive(list);
       renderArchiveList();
       renderStats();
+      return true;
     }
 
     async function remoteUpsert(project) {
       if (!USE_SUPABASE || !project) return;
-      const row = { id: project.id, payload: project, updated: project.updated };
+      const pid = String(project.id);
+      const row = { id: pid, payload: { ...project, id: pid }, updated: project.updated };
       const { error } = await supabaseClient.from("projects").upsert(row, { onConflict: "id" });
       if (error) console.warn("Supabase upsert error:", error);
     }
 
     async function remoteDelete(id) {
       if (!USE_SUPABASE || !id) return;
-      const { error } = await supabaseClient.from("projects").delete().eq("id", id);
+      const { error } = await supabaseClient.from("projects").delete().eq("id", String(id));
       if (error) console.warn("Supabase delete error:", error);
     }
 
@@ -2530,7 +2797,19 @@
             }
           }
         )
-        .subscribe();
+        .subscribe((status) => {
+          if (status === "SUBSCRIBED") {
+            setSyncStatus("connected", "Live verbunden");
+            return;
+          }
+          if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+            setSyncStatus("error", "Sync-Fehler");
+            return;
+          }
+          if (status === "CLOSED") {
+            setSyncStatus("offline", "Live getrennt");
+          }
+        });
     }
 
     async function remoteFetchSettings() {
@@ -2540,13 +2819,14 @@
         .select("key,value,updated");
       if (error) {
         console.warn("Supabase settings fetch error:", error);
-        return;
+        return false;
       }
       const logoRow = (data || []).find(r => r.key === "logo");
       if (logoRow && typeof logoRow.value === "string") {
         setLogoData(logoRow.value);
         refreshLogo();
       }
+      return true;
     }
 
     async function remoteSetSetting(key, value) {
@@ -2554,6 +2834,80 @@
       const row = { key, value: value || "", updated: new Date().toISOString() };
       const { error } = await supabaseClient.from("settings").upsert(row, { onConflict: "key" });
       if (error) console.warn("Supabase setting upsert error:", error);
+    }
+
+    async function refreshRemoteData() {
+      if (!USE_SUPABASE) return;
+      if (!navigator.onLine) {
+        setSyncStatus("offline", "Offline");
+        return;
+      }
+      setSyncStatus("syncing", "Sync laeuft...");
+      const okProjects = await remoteFetchAll();
+      const okSettings = await remoteFetchSettings();
+      if (okProjects === false || okSettings === false) {
+        setSyncStatus("error", "Sync-Fehler");
+        return;
+      }
+      setSyncStatus("connected", "Live verbunden");
+    }
+
+    function downloadJsonFile(name, payload) {
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+
+    async function exportBackupJson() {
+      const btn = document.getElementById("backup");
+      const old = btn ? btn.textContent : "";
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Backup...";
+      }
+      try {
+        const now = new Date();
+        const payload = {
+          appVersion: APP_VERSION,
+          exportedAt: now.toISOString(),
+          source: USE_SUPABASE ? "supabase" : "local",
+          projects: [],
+          settings: {
+            logo: getLogoData()
+          }
+        };
+        if (USE_SUPABASE && navigator.onLine) {
+          const { data: projRows } = await supabaseClient
+            .from("projects")
+            .select("id,payload,updated")
+            .order("updated", { ascending: false });
+          payload.projects = (projRows || []).map(rowToProject).filter(Boolean);
+          const { data: setRows } = await supabaseClient
+            .from("settings")
+            .select("key,value,updated");
+          payload.settingsRows = setRows || [];
+          const logoRow = (setRows || []).find(r => r.key === "logo");
+          if (logoRow && typeof logoRow.value === "string") {
+            payload.settings.logo = logoRow.value;
+          }
+        } else {
+          payload.projects = getArchive();
+        }
+        const stamp = now.toISOString().slice(0, 19).replace(/[:T]/g, "-");
+        downloadJsonFile(`aufmass-backup-${stamp}.json`, payload);
+      } catch (err) {
+        console.error("Backup export failed:", err);
+        alert("Backup konnte nicht erstellt werden.");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = old || "Backup JSON";
+        }
+      }
     }
 
     function saveArchive(list) {
@@ -2575,7 +2929,7 @@
     }
 
     function setLastId(id) {
-      if (id) localStorage.setItem(LAST_KEY, id);
+      if (id !== null && id !== undefined && id !== "") localStorage.setItem(LAST_KEY, String(id));
     }
 
     function getLastId() {
@@ -2594,19 +2948,8 @@
 
     function setTheme(theme) {
       document.body.classList.toggle("theme-ocean", theme === "ocean");
-      localStorage.setItem(THEME_KEY, theme);
       const themeMeta = document.querySelector('meta[name="theme-color"]');
       if (themeMeta) themeMeta.setAttribute("content", theme === "ocean" ? "#0f2533" : "#45cbd1");
-      const switcher = document.getElementById("themeSwitch");
-      if (switcher) {
-        switcher.querySelectorAll("button").forEach(btn => {
-          btn.classList.toggle("active", btn.dataset.theme === theme);
-        });
-      }
-    }
-
-    function getTheme() {
-      return localStorage.getItem(THEME_KEY) || "ocean";
     }
     document.addEventListener("DOMContentLoaded", () => {
       updateAddonOptionsVisibility();
@@ -2671,6 +3014,23 @@
       setActive("textildruck_qty", opts.textildruck_qty);
       const colorEl = document.getElementById("textilColor");
       if (colorEl) colorEl.value = opts.textildruck_color || "";
+    }
+
+    function clearAddonOptions(addonName) {
+      const clearField = (field) => {
+        document.querySelectorAll(`.option-group[data-field="${field}"] .option-btn`).forEach(btn => {
+          btn.classList.remove("active");
+        });
+      };
+      if (addonName === "Logo") clearField("logo");
+      if (addonName === "Visitenkarte") clearField("visitenkarte_qty");
+      if (addonName === "Flyer") clearField("flyer_qty");
+      if (addonName === "Menükarte") clearField("menukarte_mode");
+      if (addonName === "Textildruck") {
+        clearField("textildruck_qty");
+        const colorEl = document.getElementById("textilColor");
+        if (colorEl) colorEl.value = "";
+      }
     }
 
     function getFormData() {
@@ -2956,10 +3316,11 @@
       }
 
       if (!currentId) currentId = String(Date.now());
+      else currentId = String(currentId);
       setLastId(currentId);
 
       const list = getArchive();
-      const index = list.findIndex(p => p.id === currentId);
+      const index = list.findIndex(p => sameId(p.id, currentId));
       const existingStage = index >= 0 ? normalizeStage(list[index].stage) : null;
       const existingSignature = index >= 0 ? list[index].depositSignature : null;
       const project = {
@@ -3010,6 +3371,13 @@
     }
     function getProjectStage(project) {
       return normalizeStage(project && project.stage);
+    }
+
+    function getStageLabel(stage, depositLabel) {
+      if (stage === "angenommen") return "Angebot angenommen";
+      if (stage === "versendet") return "Angebot versendet";
+      if (stage === "anzahlung") return `Anzahlung${depositLabel || ""}`;
+      return "Wartet auf Angebot";
     }
 
     function parseProjectDate(p) {
@@ -3063,7 +3431,7 @@
     let signatureDirty = false;
 
     function openStatusSheet(id) {
-      statusTargetId = id;
+      statusTargetId = String(id);
       statusBackdrop.classList.add("show");
       statusSheet.classList.add("open");
     }
@@ -3096,12 +3464,12 @@
     }
 
     function openSignatureModal(id, stage) {
-      signatureTargetId = id;
+      signatureTargetId = String(id);
       signaturePendingStage = stage;
       signatureDirty = false;
       if (signatureAmount) {
         const listNow = getArchive();
-        const item = listNow.find(x => x.id === id);
+        const item = listNow.find(x => sameId(x.id, id));
         signatureAmount.value = item && item.depositAmount ? item.depositAmount : "";
       }
       signatureBackdrop.classList.add("show");
@@ -3132,11 +3500,12 @@
         const stage = getProjectStage(p);
         item.className = "archive-item";
         item.dataset.stage = stage;
-        if (currentId === p.id) item.classList.add("active");
+        if (sameId(currentId, p.id)) item.classList.add("active");
         const depositLabel = stage === "anzahlung" && p.depositAmount ? ` €${p.depositAmount}` : "";
+        const stageLabel = getStageLabel(stage, depositLabel);
         item.innerHTML = `
           <div class="archive-main">
-            <button class="stage-pill" type="button" data-stage="${stage}">${stage === "angenommen" ? "Angenommen" : (stage === "versendet" ? "Angebot" : (stage === "anzahlung" ? `Anzahlung${depositLabel}` : "Wartet"))}</button>
+            <button class="stage-pill" type="button" data-stage="${stage}">${stageLabel}</button>
             <strong>${p.kunde}</strong>
           </div>
           <div class="archive-actions">
@@ -3145,7 +3514,7 @@
         `;
         item.addEventListener("click", (e) => {
           if (e.target.classList.contains("delete")) return;
-          currentId = p.id;
+          currentId = String(p.id);
           setLastId(currentId);
           setFormData(p);
           restoreState(p.data || {});
@@ -3155,6 +3524,9 @@
         const stageBtn = item.querySelector(".stage-pill");
         if (stageBtn) {
           let pressTimer = null;
+          let openedByLongPress = false;
+          let openedByPointerUp = false;
+          let movedFar = false;
           let startX = 0;
           let startY = 0;
           const LONG_MS = 450;
@@ -3166,26 +3538,55 @@
           const moved = (x, y) => Math.hypot(x - startX, y - startY) > MOVE_TOL;
           stageBtn.addEventListener("pointerdown", (e) => {
             e.stopPropagation();
+            openedByLongPress = false;
+            openedByPointerUp = false;
+            movedFar = false;
             startX = e.clientX;
             startY = e.clientY;
             pressTimer = setTimeout(() => {
+              openedByLongPress = true;
               openStatusSheet(p.id);
             }, LONG_MS);
           });
           stageBtn.addEventListener("pointermove", (e) => {
-            if (moved(e.clientX, e.clientY)) cancel();
+            if (moved(e.clientX, e.clientY)) {
+              movedFar = true;
+              cancel();
+            }
           });
-          stageBtn.addEventListener("pointerup", cancel);
-          stageBtn.addEventListener("pointerleave", cancel);
-          stageBtn.addEventListener("pointercancel", cancel);
-          stageBtn.addEventListener("click", (e) => e.stopPropagation());
+          stageBtn.addEventListener("pointerup", (e) => {
+            e.stopPropagation();
+            const shouldOpen = !openedByLongPress && !movedFar;
+            cancel();
+            if (shouldOpen) {
+              openedByPointerUp = true;
+              openStatusSheet(p.id);
+            }
+          });
+          stageBtn.addEventListener("pointerleave", (e) => {
+            e.stopPropagation();
+            cancel();
+          });
+          stageBtn.addEventListener("pointercancel", (e) => {
+            e.stopPropagation();
+            cancel();
+          });
+          stageBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (openedByLongPress || openedByPointerUp) {
+              openedByLongPress = false;
+              openedByPointerUp = false;
+              return;
+            }
+            openStatusSheet(p.id);
+          });
         }
         item.querySelector(".delete").addEventListener("click", () => {
           if (!confirm("Projekt löschen?")) return;
-          const updatedList = getArchive().filter(x => x.id !== p.id);
+          const updatedList = getArchive().filter(x => !sameId(x.id, p.id));
           saveArchive(updatedList);
           if (USE_SUPABASE) remoteDelete(p.id);
-          if (currentId === p.id) {
+          if (sameId(currentId, p.id)) {
             currentId = null;
             localStorage.removeItem(LAST_KEY);
           }
@@ -3207,9 +3608,9 @@
       const list = getArchive();
       const lastId = getLastId();
       if (lastId) {
-        const p = list.find(x => x.id === lastId);
+        const p = list.find(x => sameId(x.id, lastId));
         if (p) {
-          currentId = p.id;
+          currentId = String(p.id);
           setFormData(p);
           restoreState(p.data || {});
           return true;
@@ -3300,7 +3701,7 @@
             alert("Bitte Bezeichnung eingeben.");
             return;
           }
-          if (!wVal || !hVal) {
+          if (!Number.isFinite(wVal) || !Number.isFinite(hVal) || wVal <= 0 || hVal <= 0) {
             alert("Bitte B und H eingeben.");
             return;
           }
@@ -3323,7 +3724,7 @@
 
     function addDoor() {
       const area = getArea();
-      openModal({ title: "Tür anlegen", label: "Tür", w: 90, h: 210, note: "" })
+      openModal({ title: "Tür anlegen", label: "Tür", w: "", h: "", note: "" })
         .then(val => {
           if (val.deleted) return;
           area.base = [{
@@ -3343,7 +3744,7 @@
       const area = getArea();
       area.leftCount += 1;
       const label = `Fenster links ${area.leftCount}`;
-      openModal({ title: "Fenster links", label, w: 100, h: 200, note: "" })
+      openModal({ title: "Fenster links", label, w: "", h: "", note: "" })
         .then(val => {
           if (val.deleted) return;
           area.base.unshift({
@@ -3363,7 +3764,7 @@
       const area = getArea();
       area.rightCount += 1;
       const label = `Fenster rechts ${area.rightCount}`;
-      openModal({ title: "Fenster rechts", label, w: 100, h: 200, note: "" })
+      openModal({ title: "Fenster rechts", label, w: "", h: "", note: "" })
         .then(val => {
           if (val.deleted) return;
           area.base.push({
@@ -3388,8 +3789,7 @@
         alert("Wand kann nicht direkt neben einer Wand eingefügt werden.");
         return;
       }
-      const defaultH = Math.max(left?.h || 200, right?.h || 200);
-      openModal({ title: "Wand", label: "Wand", w: 20, h: defaultH, note: "" })
+      openModal({ title: "Wand", label: "Wand", w: "", h: "", note: "" })
         .then(val => {
           if (val.deleted) return;
           const leftNow = area.base[index - 1];
@@ -3411,9 +3811,42 @@
         .catch(() => {});
     }
 
+    function addEdgeWall(side) {
+      const area = getArea();
+      if (!area.base.length) return;
+      const atLeft = side === "left";
+      const neighbor = atLeft ? area.base[0] : area.base[area.base.length - 1];
+      if (!neighbor || neighbor.kind === "gap") {
+        alert("Wand kann nicht direkt neben einer Wand eingefügt werden.");
+        return;
+      }
+      const title = atLeft ? "Wand links außen" : "Wand rechts außen";
+      openModal({ title, label: "Wand", w: "", h: "", note: "" })
+        .then(val => {
+          if (val.deleted) return;
+          const currentNeighbor = atLeft ? area.base[0] : area.base[area.base.length - 1];
+          if (!currentNeighbor || currentNeighbor.kind === "gap") {
+            alert("Wand kann nicht direkt neben einer Wand eingefügt werden.");
+            return;
+          }
+          const wall = {
+            id: state.nextId++,
+            kind: "gap",
+            label: val.label,
+            w: val.w,
+            h: val.h,
+            note: val.note
+          };
+          if (atLeft) area.base.unshift(wall);
+          else area.base.push(wall);
+          render();
+        })
+        .catch(() => {});
+    }
+
     function addTop(parent) {
       const label = parent.kind === "door" ? "Tür oben" : `${parent.label} oben`;
-      openModal({ title: "Element oben", label, w: parent.w, h: 40, note: "" })
+      openModal({ title: "Element oben", label, w: "", h: "", note: "" })
         .then(val => {
           if (val.deleted) return;
           const area = getArea();
@@ -3436,7 +3869,7 @@
       const area = getArea();
       const form = getFormData();
       const defaultLabel = form.kunde || "Kundenname";
-      openModal({ title: "Schild / LED", label: defaultLabel, w: 300, h: 50, note: "", showLighting: true, lighting: "front", showType: true, signType: "letters", plexi: true })
+      openModal({ title: "Schild / LED", label: defaultLabel, w: "", h: "", note: "", showLighting: true, lighting: "front", showType: true, signType: "letters", plexi: true })
         .then(val => {
           if (val.deleted) return;
           area.sign = {
@@ -3516,6 +3949,7 @@
 
       const w = board.clientWidth;
       const h = board.clientHeight;
+      resetPlusLayout(w, h);
       const pad = 40;
       const gap = 18;
       const gapTop = 0;
@@ -3529,8 +3963,8 @@
       const sign = area.sign;
 
       if (!base.length && !sign) {
-        placePlus(w / 2, h * 0.25, addSign, "LED-Leuchtbuchstaben");
-        placePlus(w / 2, h * 0.65, addDoor, "Tür einfügen");
+        placePlus(w / 2, h * 0.25, addSign, "LED-Leuchtbuchstaben", "must");
+        placePlus(w / 2, h * 0.65, addDoor, "Tür einfügen", "compact must");
         return;
       }
 
@@ -3683,7 +4117,7 @@
           }
           x = clamp(x, radius, w - radius);
           y = clamp(y, 60, h - 60);
-          placePlus(x, y, addLeft, "Fenster links", "compact");
+          placePlus(x, y, addLeft, "Fenster links", "compact must");
         }
         if (rightMost) {
           const radius = isMobile ? 26 : 32;
@@ -3696,7 +4130,7 @@
           }
           x = clamp(x, radius, w - radius);
           y = clamp(y, 60, h - 60);
-          placePlus(x, y, addRight, "Fenster rechts", "compact");
+          placePlus(x, y, addRight, "Fenster rechts", "compact must");
         }
       }
 
@@ -3727,21 +4161,41 @@
         }
       }
 
+      if (base.length) {
+        const edgeY = clamp(baseRowTop + baseRowHpx + (isMobile ? 16 : 24), 70, h - 70);
+        const firstBase = base[0];
+        const lastBase = base[base.length - 1];
+        const firstPos = firstBase ? basePositions.get(firstBase.id) : null;
+        const lastPos = lastBase ? basePositions.get(lastBase.id) : null;
+
+        if (firstBase && firstPos && firstBase.kind !== "gap") {
+          const x = clamp(firstPos.x - (isMobile ? 16 : 22), 40, w - 40);
+          placePlus(x, edgeY, () => addEdgeWall("left"), "", "gap-mini");
+        }
+        if (lastBase && lastPos && lastBase.kind !== "gap") {
+          const x = clamp(lastPos.x + lastPos.w + (isMobile ? 16 : 22), 40, w - 40);
+          placePlus(x, edgeY, () => addEdgeWall("right"), "", "gap-mini");
+        }
+      }
+
       if (!sign) {
-        placePlus(w / 2, 40, addSign, "LED-Leuchtbuchstaben");
+        const topVisualY = (topRowH && topOrdered.length)
+          ? (baseRowTop - topRowH * scale)
+          : baseRowTop;
+        const signPlusY = clamp(topVisualY - (isMobile ? 22 : 30), 34, h - 34);
+        placePlus(w / 2, signPlusY, addSign, "Schild/LED", "must");
       }
 
       const hasDoor = base.some(b => b.kind === "door");
       if (!hasDoor) {
-        placePlus(w / 2, h - 60, addDoor, "Tür einfügen");
+        placePlus(w / 2, h - 60, addDoor, "Tür einfügen", "compact must");
       }
 
       const legendItems = [
         { label: "Alle Maße in cm", color: "transparent", className: "unit" },
-        { label: "Fenster", color: "#64748b" },
-        { label: "Tür", color: "var(--accent)" },
-        { label: "Oben", color: "#64748b" },
-        { label: "Schild/LED", color: "var(--accent-3)" }
+        { label: "Tür", color: "#36c3c1" },
+        { label: "Wand", color: "#94a3b8" },
+        { label: "Schild/LED", color: "#2f6bff" }
       ];
       legendItems.forEach(item => {
         const span = document.createElement("span");
@@ -3956,11 +4410,20 @@
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = `plus ${variant || ""}`.trim();
-      btn.style.left = `${x}px`;
-      btn.style.top = `${y}px`;
+      const radius = plusRadiusForVariant(variant);
+      const v = String(variant || "");
+      const pos = resolvePlusPosition(x, y, radius, {
+        variant: v,
+        essential: v.includes("must")
+      });
+      if (!pos) return null;
+      btn.style.left = `${pos.x}px`;
+      btn.style.top = `${pos.y}px`;
       btn.innerHTML = `<span class="plus-icon">+</span>${label ? `<span class="plus-label">${label}</span>` : ""}`;
       btn.addEventListener("click", onClick);
       plusLayer.appendChild(btn);
+      plusLayoutState.points.push({ x: pos.x, y: pos.y, r: radius });
+      return btn;
     }
 
     function getSummary() {
@@ -4148,11 +4611,13 @@
         } else {
           const cx = b.x + b.w / 2;
           const cy = b.y + b.h / 2;
-          const offset = Math.min(140, Math.max(28, b.h * 0.35));
-          const labelSize = Math.max(10, Math.min(14, b.w * 0.6));
-          const metaSize = Math.max(8, Math.min(12, b.h * 0.12));
-          svg += `<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-size="${labelSize}" font-weight="700" fill="#111" transform="translate(${cx} ${cy}) rotate(-90) translate(${offset} 0)">${b.wcm} x ${b.hcm}</text>`;
-          svg += `<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-size="${metaSize}" font-weight="700" fill="rgba(15,23,42,0.35)" transform="translate(${cx} ${cy}) rotate(-90) translate(${-offset} 0)">Wand</text>`;
+          const wallLabel = (b.label || "Wand").trim() || "Wand";
+          const sizeText = `${b.wcm} x ${b.hcm}`;
+          const offset = Math.min(112, Math.max(20, b.h * 0.24));
+          const labelSize = Math.max(10, Math.min(14, b.w * 0.56));
+          const sizeSize = Math.max(8, Math.min(11, b.w * 0.42));
+          svg += `<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-size="${labelSize}" font-weight="700" fill="#111" transform="translate(${cx} ${cy}) rotate(-90) translate(${-offset} 0)">${escapeXml(wallLabel)}</text>`;
+          svg += `<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-size="${sizeSize}" font-weight="700" fill="rgba(15,23,42,0.5)" transform="translate(${cx} ${cy}) rotate(-90) translate(${offset} 0)">${escapeXml(sizeText)}</text>`;
         }
       };
       baseList.filter(b => b.kind !== "gap").forEach(drawBaseBox);
@@ -4890,6 +5355,8 @@ async function exportPdf() {
     const shareImageBtn = document.getElementById("shareImage");
     if (shareImageBtn) shareImageBtn.addEventListener("click", shareAsImage);
     document.getElementById("pdf").addEventListener("click", exportPdf);
+    const backupBtn = document.getElementById("backup");
+    if (backupBtn) backupBtn.addEventListener("click", exportBackupJson);
     document.getElementById("openDrawer").addEventListener("click", openDrawer);
     document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
     drawerBackdrop.addEventListener("click", closeDrawer);
@@ -4924,7 +5391,7 @@ async function exportPdf() {
           const stage = btn.dataset.stage;
           if (!statusTargetId || !stage) return closeStatusSheet();
           const listNow = getArchive();
-          const idx = listNow.findIndex(x => x.id === statusTargetId);
+          const idx = listNow.findIndex(x => sameId(x.id, statusTargetId));
           if (idx < 0) return closeStatusSheet();
           if (stage === "anzahlung") {
             closeStatusSheet();
@@ -4932,7 +5399,9 @@ async function exportPdf() {
             return;
           }
           listNow[idx].stage = stage;
+          listNow[idx].updated = new Date().toISOString();
           saveArchive(listNow);
+          if (USE_SUPABASE) remoteUpsert(listNow[idx]);
           renderArchiveList();
           closeStatusSheet();
         });
@@ -4954,12 +5423,14 @@ async function exportPdf() {
       }
       const dataUrl = signatureCanvas.toDataURL("image/png");
       const listNow = getArchive();
-      const idx = listNow.findIndex(x => x.id === signatureTargetId);
+      const idx = listNow.findIndex(x => sameId(x.id, signatureTargetId));
       if (idx < 0) return closeSignatureModal();
       listNow[idx].stage = signaturePendingStage;
       listNow[idx].depositSignature = dataUrl;
       listNow[idx].depositAmount = amount;
+      listNow[idx].updated = new Date().toISOString();
       saveArchive(listNow);
+      if (USE_SUPABASE) remoteUpsert(listNow[idx]);
       renderArchiveList();
       closeSignatureModal();
     });
@@ -5077,15 +5548,7 @@ async function exportPdf() {
       setRealMode(realToggle.checked);
       realToggle.addEventListener("change", () => setRealMode(realToggle.checked));
     }
-    const themeSwitch = document.getElementById("themeSwitch");
-    if (themeSwitch) {
-      setTheme(getTheme());
-      themeSwitch.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-theme]");
-        if (!btn) return;
-        setTheme(btn.dataset.theme || "classic");
-      });
-    }
+    setTheme("ocean");
 
     document.getElementById("adresse").addEventListener("input", scheduleAutosave);
     document.getElementById("monteur").addEventListener("input", scheduleAutosave);
@@ -5095,7 +5558,13 @@ async function exportPdf() {
       addonsGrid.addEventListener("click", (e) => {
         const btn = e.target.closest(".addon");
         if (!btn) return;
+        const addonName = btn.dataset.addon;
+        const wasActive = btn.classList.contains("active");
         btn.classList.toggle("active");
+        const isActive = btn.classList.contains("active");
+        if (addonName && (!wasActive || !isActive)) {
+          clearAddonOptions(addonName);
+        }
         updateAddonOptionsVisibility();
         extrasTouched = true;
         scheduleAutosave();
@@ -5211,13 +5680,16 @@ async function exportPdf() {
     if (!loaded) render();
     renderStats();
     if (USE_SUPABASE) {
-      remoteFetchAll();
-      remoteFetchSettings();
+      setSyncStatus("syncing", "Verbinde...");
+      refreshRemoteData();
       startRealtime();
+      window.addEventListener("online", refreshRemoteData);
+      window.addEventListener("offline", () => setSyncStatus("offline", "Offline"));
       setInterval(() => {
-        remoteFetchAll();
-        remoteFetchSettings();
+        refreshRemoteData();
       }, 20000);
+    } else {
+      setSyncStatus("local", "Lokal");
     }
     syncSignLabel();
     refreshLogo();
